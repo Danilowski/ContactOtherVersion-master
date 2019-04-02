@@ -23,6 +23,7 @@ public class Sound extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sound);
 
+        //nadaje zmiennym RadioButton id z XML
         rg = findViewById(R.id.rg);
         rb1 = findViewById(R.id.rb1);
         rb2 = findViewById(R.id.rb2);
@@ -31,6 +32,7 @@ public class Sound extends AppCompatActivity {
         rb5 = findViewById(R.id.rb5);
         rb6 = findViewById(R.id.rb6);
 
+        //nadaje nazwy RadioButton widoczne w XML 
         rb1.setText("Sound 1");
         rb2.setText("Sound 2");
         rb3.setText("Sound 3");
@@ -39,11 +41,15 @@ public class Sound extends AppCompatActivity {
         rb6.setText("Sound 6");
     }
 
+    //jeśli wciśniesz przycisk cancel wróć do poprzedniej aktywności
     public void cancel(View view) {
         finish();
     }
 
+    //jeśli wciśniesz przycisk
     public void ok(View view) {
+        //jeśli zaznaczyłem jakikolwiek radiobutton wtedy przekazuje jego ścieżkę w zmiennej int do poprzedniej aktywności
+        //jeśli nie zaznaczyłem nic poprosi mnie aby zaznaczył jakiś radiobuton
         if(checked) {
             Intent i = new Intent();
             i.putExtra("sound", soundID);
@@ -54,6 +60,7 @@ public class Sound extends AppCompatActivity {
         }
     }
 
+    //funkcja która po wybraniu jakiekogolwie RadioButton od razu przypisuję mi ścieżkę do zmiennej soundID
     public void choose(View view) {
         checked = ((RadioButton) view).isChecked();
 
