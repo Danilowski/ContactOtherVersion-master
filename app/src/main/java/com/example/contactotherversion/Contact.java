@@ -21,31 +21,27 @@ public class Contact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
+        //nadaję zmiennej spinner id z XML
         sp = findViewById(R.id.spinner);
 
+        //zmiennej contacts przypisuję tablice z string.xml
         contacts = getResources().getStringArray(R.array.contacts);
+        //określam wygląd spinnera
         aa = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, contacts);
+        //przypisuję wygląd spinnera
         sp.setAdapter(aa);
-
-        /*sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
     }
 
+    //jeśli wcisnę cancel wróć do poprzedniej aktywności
     public void cancel(View view) {
         finish();
     }
 
+    //jeśli wcisnę przycisk ok
     public void ok(View view) {
+        //przypisuje do zmiennej pos posycję itemu ze spinnera 
         pos = sp.getSelectedItemPosition();
+        //do zmiennej result przypisuję z tablicy contact o indeksie pos
         result = contacts[pos];
         Intent intent = new Intent();
         intent.putExtra("contact", result);
