@@ -39,17 +39,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Przypisuje do zmiennej tv, TextView z XML po id
         tv = findViewById(R.id.tv);
         iv = findViewById(R.id.iv);
 
+        //ustawiam tekst w TextView
         tv.setText("Choose contact");
 
+        //do zmiennej pic przypisuje tablice zdefiniowana w string.xml
         pic = getResources().getStringArray(R.array.pictures);
-        uri = Uri.parse(pic[0]);
+        uri = Uri.parse(pic[0]); //zamieniam sciezke string zdefiniowaną w tablicy do zmiennej uri
+        //ustawiam obraz za pomoca uri
         iv.setImageResource(getApplicationContext().getResources().getIdentifier
                 ("" + uri, null, getApplicationContext().getPackageName()));
 
-        Toast.makeText(getApplicationContext(), ""+uri, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), ""+uri, Toast.LENGTH_LONG).show();
         //iv.setImageResource(R.drawable.avatar_1);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -57,16 +61,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //jesli mój multiplayer jest włączony po wciśnięciu przycisku wyłacz mediaplayer i ustaw mp na null
+                //jeśli mój mediaplayer jest wyłączony po wciśnięciu przycisku włącz mediaplayer
                 if(mp != null){
                     mp.stop();
                     mp = null;
                 }else{
+                    //podaj soundtrack za pomocą id zwróconego z klasy Sounds
                     mp = MediaPlayer.create(getApplicationContext(), soundID);
                     mp.start();
-                }
-
-                Snackbar.make(view, "playing...", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "playing...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                }
             }
         });
     }
@@ -93,11 +99,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //przejście do aktywności kontakt
     public void contact(View view) {
         Intent intent = new Intent(getApplicationContext(), Contact.class);
         startActivityForResult(intent, 1);
     }
 
+    //przejście do aktywności sound 
     public void sound(View view) {
         Intent intent = new Intent(getApplicationContext(), Sound.class);
         startActivityForResult(intent, 2);
@@ -106,13 +114,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //sprawdzam co zwróciło mi startActivityforresult() i względem resultCode i requestCode wybieram odpowiedznią opcję
         if(resultCode == RESULT_OK){
             if(requestCode == 1){
                 name = data.getStringExtra("contact");
-                tv.setText(name);
+                //ustawiam w TextView wybraną nazwę
+                tv.setText(name); 
+                //losuje obrazek
                 choosePic();
             }
             else if(requestCode == 2){
+                //nadaje soundID zmienna zwróconą z klasy sound
                 soundID = data.getIntExtra("sound", 0);
             }
         }else{
@@ -120,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //losowanie obrazu
     public void choosePic(){
         Random r = new Random();
         rand = r.nextInt(5);
